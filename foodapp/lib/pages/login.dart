@@ -15,6 +15,8 @@ class _LoginState extends State<Login> {
 
   bool _obscurePassword = true;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -65,30 +67,69 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   SizedBox(height: 24),
-                  _buildEmailField(),
-                  SizedBox(height: 16),
-                  _buildPasswordField(),
-                  SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                  // _buildEmailField(),
+                  // SizedBox(height: 16),
+                  // _buildPasswordField(),
+                  // SizedBox(height: 24),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: ElevatedButton(
+                  //     onPressed: () {},
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor: Colors.blue,
+                  //       foregroundColor: Colors.white,
+                  //       padding: EdgeInsets.symmetric(vertical: 14),
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //       elevation: 0,
+                  //     ),
+                  //     child: Text(
+                  //       'Log In',
+                  //       style: TextStyle(
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        _buildEmailField(),
+                        SizedBox(height: 16),
+                        _buildPasswordField(),
+                        SizedBox(height: 24),
+                        SizedBox(
+                          width: double.infinity, // Takes up full width
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                print("Email: ${_emailController.text}");
+                                print("Password: ${_passwordController.text}");
+                                Navigator.pushReplacementNamed(context, '/dashboard');
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              elevation: 0,
+                            ),
+                            child: Text(
+                              'Log In',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        'Log In',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 16),
@@ -193,6 +234,16 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your email';
+        }
+        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+          // Simple email validation regex
+          return 'Please enter a valid email address';
+        }
+        return null;
+      },
     );
   }
 
@@ -242,6 +293,21 @@ class _LoginState extends State<Login> {
           },
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your password';
+        }
+        if (value.length < 8) {
+          return 'Password must be at least 8 characters long';
+        }
+        if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value) || !RegExp(r'(?=.*\d)').hasMatch(value)) {
+          return 'Password must include both letters and numbers';
+        }
+        if (!RegExp(r'(?=.*[@$!%*#?&])').hasMatch(value)) {
+          return 'Password needs at least one special character';
+        }
+        return null;
+      },
     );
   }
 }

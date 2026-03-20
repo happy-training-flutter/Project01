@@ -20,6 +20,8 @@ class _SignupState extends State<Signup> {
   bool _obscurePassword = true;
   bool _obscureReEnterPassword = true;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -79,36 +81,84 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   SizedBox(height: 24),
-                  _buildNameField(),
-                  SizedBox(height: 16),
-                  _buildEmailField(),
-                  SizedBox(height: 16),
-                  _buildNumberField(),
-                  SizedBox(height: 16),
-                  _buildPasswordField(),
-                  SizedBox(height: 16),
-                  _buildReEnterPasswordField(),
-                  SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                  // _buildNameField(),
+                  // SizedBox(height: 16),
+                  // _buildEmailField(),
+                  // SizedBox(height: 16),
+                  // _buildNumberField(),
+                  // SizedBox(height: 16),
+                  // _buildPasswordField(),
+                  // SizedBox(height: 16),
+                  // _buildReEnterPasswordField(),
+                  // SizedBox(height: 24),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: ElevatedButton(
+                  //     onPressed: () {},
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor: Colors.blue,
+                  //       foregroundColor: Colors.white,
+                  //       padding: EdgeInsets.symmetric(vertical: 14),
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //       elevation: 0,
+                  //     ),
+                  //     child: Text(
+                  //       'Sign Up',
+                  //       style: TextStyle(
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        _buildNameField(),
+                        SizedBox(height: 16),
+                        _buildEmailField(),
+                        SizedBox(height: 16),
+                        _buildNumberField(),
+                        SizedBox(height: 16),
+                        _buildPasswordField(),
+                        SizedBox(height: 16),
+                        _buildReEnterPasswordField(),
+                        SizedBox(height: 24),
+                        SizedBox(
+                          width: double.infinity, // Takes up full width
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                print("Name: ${_nameController.text}");
+                                print("Email: ${_emailController.text}");
+                                print("Number: ${_numberController.text}");
+                                print("Password: ${_passwordController.text}");
+                                print("Re-enter Password: ${_reEnterPasswordController.text}");
+                                Navigator.pushReplacementNamed(context, '/login');
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              elevation: 0,
+                            ),
+                            child: Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 16),
@@ -210,6 +260,15 @@ class _SignupState extends State<Signup> {
         ),
       ),
       textInputAction: TextInputAction.next,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your name';
+        }
+        if (value.trim().length < 2) {
+          return 'Name must be at least 2 characters';
+        }
+        return null;
+      },
     );
   }
 
@@ -247,6 +306,15 @@ class _SignupState extends State<Signup> {
           ),
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your email';
+        }
+        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+          return 'Please enter a valid email address';
+        }
+        return null;
+      },
     );
   }
 
@@ -284,6 +352,16 @@ class _SignupState extends State<Signup> {
           ),
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your phone number';
+        }
+        final digitsOnly = value.replaceAll(RegExp(r'\D'), '');
+        if (digitsOnly.length < 10) {
+          return 'Please enter a valid phone number (at least 10 digits)';
+        }
+        return null;
+      },
     );
   }
 
@@ -333,6 +411,15 @@ class _SignupState extends State<Signup> {
           },
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter a password';
+        }
+        if (!RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$').hasMatch(value)) {
+          return 'Password must be at least 8 characters and include letters, numbers, and special characters';
+        }
+        return null;
+      },
     );
   }
 
@@ -382,6 +469,15 @@ class _SignupState extends State<Signup> {
           },
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please re-enter your password';
+        }
+        if (value != _passwordController.text) {
+          return 'Passwords do not match';
+        }
+        return null;
+      },
     );
   }
 }
