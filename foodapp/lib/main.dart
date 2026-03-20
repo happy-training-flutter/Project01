@@ -7,7 +7,7 @@ import 'package:foodapp/pages/signup.dart';
 
 void main() {
   runApp(MaterialApp(
-    initialRoute: '/dashboard',
+    initialRoute: '/',
     routes: {
       '/': (context) => Introscreen(),
       '/signup': (context) => Signup(),
