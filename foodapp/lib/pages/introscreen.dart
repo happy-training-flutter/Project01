@@ -28,7 +28,7 @@ class Introscreen extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/dashboard');
+                        Navigator.pushNamed(context, '/login');
                       },
                       child: Text('Login'),
                     ),

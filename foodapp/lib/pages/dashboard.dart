@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodapp/foodcard.dart';
 
 class Dashboard extends StatefulWidget {
 
@@ -18,7 +17,13 @@ class _DashboardState extends State<Dashboard> {
       ),
       body: SafeArea(
           child: Center(
-            child: Foodcard(),
+            child: Text(
+                'Welcome to DashBoard',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
       ),
     );
