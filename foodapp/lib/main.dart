@@ -4,6 +4,7 @@ import 'package:foodapp/pages/details.dart';
 import 'package:foodapp/pages/home_screen.dart';
 import 'package:foodapp/pages/introscreen.dart';
 import 'package:foodapp/pages/login.dart';
+import 'package:foodapp/pages/product.dart';
 import 'package:foodapp/pages/signup.dart';
 import 'package:get/get.dart';
 
@@ -38,6 +39,7 @@ void main(){
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     // home: HomeScreen(),
-    home: Dashboard(),
+    // home: Dashboard(),
+    home: ProductList()
   ));
 }
