@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -108,7 +109,8 @@ class _LoginState extends State<Login> {
                               if (_formKey.currentState!.validate()) {
                                 print("Email: ${_emailController.text}");
                                 print("Password: ${_passwordController.text}");
-                                Navigator.pushReplacementNamed(context, '/dashboard');
+                                // Navigator.pushReplacementNamed(context, '/dashboard');
+                                Get.offNamed('/dashboard');
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -145,7 +147,8 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, '/signup');
+                          // Navigator.pushReplacementNamed(context, '/signup');
+                          Get.toNamed('/signup');
                         },
                         child: Text(
                           'Sign Up',

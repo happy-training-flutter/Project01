@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -137,7 +138,8 @@ class _SignupState extends State<Signup> {
                                 print("Number: ${_numberController.text}");
                                 print("Password: ${_passwordController.text}");
                                 print("Re-enter Password: ${_reEnterPasswordController.text}");
-                                Navigator.pushReplacementNamed(context, '/login');
+                                // Navigator.pushReplacementNamed(context, '/login');
+                                Get.toNamed('/login');
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -174,7 +176,8 @@ class _SignupState extends State<Signup> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, '/login');
+                          // Navigator.pushReplacementNamed(context, '/login');
+                          Get.toNamed('/login');
                         },
                         child: Text(
                           'Log In',
