@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp/pages/dashboard.dart';
+import 'package:foodapp/pages/demo.dart';
+import 'package:foodapp/pages/demo2.dart';
+import 'package:foodapp/pages/demo3.dart';
+import 'package:foodapp/pages/demo4.dart';
 import 'package:foodapp/pages/details.dart';
 import 'package:foodapp/pages/home_screen.dart';
 import 'package:foodapp/pages/introscreen.dart';
@@ -40,6 +44,6 @@ void main(){
     debugShowCheckedModeBanner: false,
     // home: HomeScreen(),
     // home: Dashboard(),
-    home: ProductList()
+    home: Demo4()
   ));
 }
