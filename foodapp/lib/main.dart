@@ -7,6 +7,7 @@ import 'package:foodapp/pages/demo4.dart';
 import 'package:foodapp/pages/details.dart';
 import 'package:foodapp/pages/home_screen.dart';
 import 'package:foodapp/pages/introscreen.dart';
+import 'package:foodapp/pages/localStorage01.dart';
 import 'package:foodapp/pages/login.dart';
 import 'package:foodapp/pages/product.dart';
 import 'package:foodapp/pages/signup.dart';
@@ -44,6 +45,6 @@ void main(){
     debugShowCheckedModeBanner: false,
     // home: HomeScreen(),
     // home: Dashboard(),
-    home: Demo4()
+    home: Localstorage01()
   ));
 }
