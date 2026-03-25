@@ -22,6 +22,7 @@ class NotesScreen extends StatelessWidget {
     final note = NoteModel(
       title: titleController.text,
       description: descController.text,
+      createdAt: DateTime.now(),
     );
     box.add(note);
     titleController.clear();
@@ -30,6 +31,19 @@ class NotesScreen extends StatelessWidget {
 
   void deleteNote(int index) {
     box.deleteAt(index);
+  }
+
+  void editNote(int index) {
+    NoteModel? note = box.getAt(index);
+    titleController.text = note!.title;
+    descController.text = note.description;
+    box.deleteAt(index);
+  }
+
+  String formatTime(DateTime time) {
+    final hour = time.hour.toString().padLeft(2, '0');
+    final min = time.minute.toString().padLeft(2, '0');
+    return "$hour:$min";
   }
 
   @override
@@ -78,10 +92,23 @@ class NotesScreen extends StatelessWidget {
 
                     return ListTile(
                       title: Text(note!.title),
-                      subtitle: Text(note.description),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(note.description),
+                          Text(
+                            "${note.createdAt.day}-${note.createdAt.month}-${note.createdAt.year} ${formatTime(note.createdAt)}",
+                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                          ),
+                        ],
+                      ),
                       trailing: IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () => deleteNote(index),
+                      ),
+                      leading: IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () => editNote(index),
                       ),
                     );
                   },

@@ -10,8 +10,12 @@ class NoteModel {
   @HiveField(1)
   String description;
 
+  @HiveField(2)
+  DateTime createdAt;
+
   NoteModel({
     required this.title,
     required this.description,
+    required this.createdAt,
   });
 }
