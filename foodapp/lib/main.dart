@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodapp/model/person.dart';
+import 'package:foodapp/model/note_model.dart';
+import 'package:foodapp/pages/NotesScreen.dart';
 import 'package:foodapp/pages/localStorage01.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 
 // void main() {
 //   runApp(GetMaterialApp(
@@ -30,11 +32,18 @@ import 'package:get/get.dart';
 // }
 
 
-void main(){
+void main()async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(NoteModelAdapter());
+
+  await Hive.openBox<NoteModel>('notesBox');
+
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     // home: HomeScreen(),
     // home: Dashboard(),
-    home: Localstorage01()
+    home: NotesScreen()
   ));
 }
