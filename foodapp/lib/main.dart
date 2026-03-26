@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foodapp/model/demo_list.dart';
 import 'package:foodapp/model/note_model.dart';
+import 'package:foodapp/pages/DashBoard.dart';
 import 'package:foodapp/pages/NotesScreen.dart';
 import 'package:foodapp/pages/localStorage01.dart';
 import 'package:get/get.dart';
@@ -35,14 +37,17 @@ import 'package:hive_flutter/adapters.dart';
 void main()async{
 
   await Hive.initFlutter();
-  Hive.registerAdapter(NoteModelAdapter());
+  // Hive.registerAdapter(NoteModelAdapter());
 
-  await Hive.openBox<NoteModel>('notesBox');
+  // await Hive.openBox<NoteModel>('notesBox');
+
+  Hive.registerAdapter(DemoListModelAdapter());
+  await Hive.openBox<DemoListModel>('demoListBox');
 
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     // home: HomeScreen(),
-    // home: Dashboard(),
-    home: NotesScreen()
+    home: Dashboard(),
+    // home: NotesScreen()
   ));
 }
